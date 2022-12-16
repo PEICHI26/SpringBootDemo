@@ -21,10 +21,10 @@ public class MailController {
 	private MailService mailService;
 
 	@PostMapping
-	public ResponseEntity<Void> sendMail(@Valid @RequestBody SendMailRequest request) {
+	public ResponseEntity<String> sendMail(@Valid @RequestBody SendMailRequest request) {
 		mailService.sendMail(request);
-		System.out.println("Call send mail api");
-		return ResponseEntity.noContent().build();
+		System.out.println("Send mail successfully");
+		return ResponseEntity.ok("Mail sent");
 	}
 
 }

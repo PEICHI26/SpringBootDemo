@@ -38,6 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.anyRequest().authenticated()
 			.and()
 			//UsernamePasswordAuthenticationFilter 是用來處理基於帳號密碼的驗證（對應 Spring Security 的登入畫面）
+			//後端每次收到請求時都執行固定的程式,比一般的 Filter 更優先執行
 			.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
 			//Session 的機制停用
 			.sessionManagement()

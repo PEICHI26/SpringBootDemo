@@ -29,6 +29,7 @@ public class MailService {
 	}
 
 	public void sendMail(SendMailRequest request) {
+
 		sendMail(request.getSubject(), request.getContent(), request.getReceivers());
 	}
 

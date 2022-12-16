@@ -1,8 +1,13 @@
 package com.mongoddemo.demo.model.request;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
+@Getter
+@Setter
 public class SendMailRequest {
 
 	@NotEmpty
@@ -14,27 +19,4 @@ public class SendMailRequest {
 	@NotEmpty
 	private List<String> receivers;
 
-	public String getSubject() {
-		return subject;
-	}
-
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
-	public List<String> getReceivers() {
-		return receivers;
-	}
-
-	public void setReceivers(List<String> receivers) {
-		this.receivers = receivers;
-	}
 }

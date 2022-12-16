@@ -1,9 +1,14 @@
 package com.mongoddemo.demo.model.request;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+@Getter
+@Setter
 public class ProductRequest {
 
 	@NotEmpty(message = "Product name is undefined.")
@@ -13,19 +18,4 @@ public class ProductRequest {
 	@Min(value = 0, message = "Price should be greater or equal to 0.")
 	private Integer price;
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Integer getPrice() {
-		return price;
-	}
-
-	public void setPrice(Integer price) {
-		this.price = price;
-	}
 }

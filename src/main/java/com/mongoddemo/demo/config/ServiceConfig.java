@@ -13,7 +13,8 @@ import org.springframework.context.annotation.ScopedProxyMode;
 public class ServiceConfig {
 
 	@Bean
-	@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE, proxyMode = ScopedProxyMode.TARGET_CLASS)
+	//@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE, proxyMode = ScopedProxyMode.TARGET_CLASS)
+	@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 	public ProductService productService(ProductRepository repository,
 		MailService mailService) {
 		System.out.println("Product Service is created.");

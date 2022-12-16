@@ -27,6 +27,7 @@ public class LogApiFilter extends OncePerRequestFilter {
 		if (params != null) {
 			uri += "?" + params;
 		}
+		//Controller離開後印出這行
 		System.out.println(String.join(" ", String.valueOf(httpStatus), httpMethod, uri));
 	}
 }

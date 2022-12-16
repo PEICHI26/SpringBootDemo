@@ -37,6 +37,7 @@ public class ProductService {
 	public ProductResponse createProduct(ProductRequest request) {
 		Product product = ProductConverter.toProduct(request);
 		repository.insert(product);
+		mailService.sendNewProductMail(product.getId());
 		return ProductConverter.toProductResponse(product);
 	}
 
@@ -50,6 +51,7 @@ public class ProductService {
 	}
 
 	public void deleteProduct(String id) {
+		mailService.sendDeleteProductMail(id);
 		repository.deleteById(id);
 	}
 

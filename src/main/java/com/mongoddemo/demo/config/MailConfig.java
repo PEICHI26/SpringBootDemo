@@ -53,7 +53,12 @@ public class MailConfig {
 	// endregion Yahoo Mail
 
 	@Bean
-	@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE, proxyMode = ScopedProxyMode.TARGET_CLASS)
+	//一啟動Spring就產生,被幾個class注入,就產生幾次
+	@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+	//一啟動Spring就產生,不管被幾個class注入,都只會產生一次
+	//@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
+	//每次呼叫時就建立一個全新的元件。且 Spring 啟動時不會馬上建立，而是等到它的方法被呼叫時才建立
+	//@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE, proxyMode = ScopedProxyMode.TARGET_CLASS)
 	public MailService mailService() {
 		JavaMailSenderImpl mailSender = "gmail".equals(platform)
 			? gmailSender()
