@@ -19,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	//UserDetailsService 這個介面來注入，Spring 會自動找到有實作這個介面的類別，也就是 SpringUserService
+	//UserDetailsService 這個介面來注入，Spring 會自動找到有實作這個介面的類別，也就是 UserDetailServiceImpl
 	@Autowired
 	private UserDetailsService userDetailsService;
 	@Autowired
@@ -37,13 +37,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.POST, "/users").permitAll()
 			.anyRequest().authenticated()
 			.and()
+			//UsernamePasswordAuthenticationFilter 是用來處理基於帳號密碼的驗證（對應 Spring Security 的登入畫面）
 			.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+			//Session 的機制停用
 			.sessionManagement()
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
+			//關閉對 CSRF（跨站請求偽造）攻擊的防護。這樣 Security 機制才不會拒絕外部直接對 API 發出的請求，如 Postman 與前端。
 			.csrf().disable();
 	}
 
+	//AuthenticationManager 接收到 UsernamePasswordAuthenticationToken 後，
+	// 在底層會透過 SecurityConfig 中所配置的 UserDetailsService 與 PasswordEncoder 來協助驗證。
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth
@@ -51,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.passwordEncoder(new BCryptPasswordEncoder());
 	}
 
+	//註冊bean,給jwtService使用
 	@Override
 	@Bean
 	public AuthenticationManager authenticationManagerBean() throws Exception {

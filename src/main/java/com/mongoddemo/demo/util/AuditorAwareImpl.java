@@ -1,4 +1,4 @@
-package com.mongoddemo.demo.config;
+package com.mongoddemo.demo.util;
 
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;

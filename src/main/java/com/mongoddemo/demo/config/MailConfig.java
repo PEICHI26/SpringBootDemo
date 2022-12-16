@@ -4,11 +4,8 @@ import java.util.Properties;
 
 import com.mongoddemo.demo.service.MailService;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.*;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.Scope;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 @Configuration
@@ -56,7 +53,7 @@ public class MailConfig {
 	// endregion Yahoo Mail
 
 	@Bean
-	@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
+	@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE, proxyMode = ScopedProxyMode.TARGET_CLASS)
 	public MailService mailService() {
 		JavaMailSenderImpl mailSender = "gmail".equals(platform)
 			? gmailSender()

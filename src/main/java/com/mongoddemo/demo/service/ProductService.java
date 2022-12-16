@@ -1,5 +1,6 @@
 package com.mongoddemo.demo.service;
 
+import com.mongoddemo.demo.converter.ProductConverter;
 import com.mongoddemo.demo.entity.Product;
 import com.mongoddemo.demo.exception.NotFoundException;
 import com.mongoddemo.demo.model.request.ProductQueryParameter;
@@ -7,11 +8,7 @@ import com.mongoddemo.demo.model.request.ProductRequest;
 import com.mongoddemo.demo.model.response.ProductResponse;
 import com.mongoddemo.demo.repository.ProductRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;

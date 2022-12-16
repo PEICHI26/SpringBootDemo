@@ -1,10 +1,10 @@
 package com.mongoddemo.demo;
 
-import com.mongoddemo.demo.config.SpringUser;
+import com.mongoddemo.demo.util.UserDetailsImpl;
 import com.mongoddemo.demo.entity.AppUser;
 import com.mongoddemo.demo.exception.NotFoundException;
 import com.mongoddemo.demo.service.AppUserService;
-import com.mongoddemo.demo.service.SpringUserService;
+import com.mongoddemo.demo.service.UserDetailServiceImpl;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
@@ -25,7 +25,7 @@ public class UserServiceTest {
 
 	//要測試的
 	@InjectMocks
-	private SpringUserService springUserService;
+	private UserDetailServiceImpl userDetailServiceImpl;
 
 	@Test
 	public void testLoadUser() {
@@ -36,16 +36,16 @@ public class UserServiceTest {
 		appUser.setName("Vin");
 		when(appUserService.getUserByEmail(email))
 			.thenReturn(appUser);
-		SpringUser springUser = (SpringUser) springUserService.loadUserByUsername(email);
-		Assertions.assertEquals(springUser.getId(), appUser.getId());
-		Assertions.assertEquals(appUser.getName(), springUser.getName());
+		UserDetailsImpl userDetailsImpl = (UserDetailsImpl) userDetailServiceImpl.loadUserByUsername(email);
+		Assertions.assertEquals(userDetailsImpl.getId(), appUser.getId());
+		Assertions.assertEquals(appUser.getName(), userDetailsImpl.getName());
 	}
 
 	@Test(expected = UsernameNotFoundException.class)
 	public void testUserLoadException() {
-		when(springUserService.loadUserByUsername(anyString()))
+		when(userDetailServiceImpl.loadUserByUsername(anyString()))
 			.thenThrow(new NotFoundException(anyString()));
-		springUserService.loadUserByUsername("vincent@gmail.com");
+		userDetailServiceImpl.loadUserByUsername("vincent@gmail.com");
 	}
 
 }

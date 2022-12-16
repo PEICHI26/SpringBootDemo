@@ -1,4 +1,4 @@
-package com.mongoddemo.demo.config;
+package com.mongoddemo.demo.util;
 
 import com.mongoddemo.demo.entity.AppUser;
 import lombok.AllArgsConstructor;
@@ -10,12 +10,13 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
-public class SpringUser implements UserDetails {
+public class UserDetailsImpl implements UserDetails {
 
 	private AppUser appUser;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
+		//轉化成 SimpleGrantedAuthority 權限物件
 		return appUser.getAuthorities().stream().map(userAuthority -> new SimpleGrantedAuthority(userAuthority.name())).collect(Collectors.toList());
 	}
 

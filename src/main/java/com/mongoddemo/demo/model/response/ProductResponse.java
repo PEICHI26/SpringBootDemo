@@ -1,7 +1,5 @@
 package com.mongoddemo.demo.model.response;
 
-import com.mongoddemo.demo.model.AuditModel;
-
 public class ProductResponse {
 	private String id;
 	private String name;

@@ -1,6 +1,5 @@
 package com.mongoddemo.demo.entity;
 
-import com.mongoddemo.demo.model.AuditModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "products")
-public class Product extends AuditModel {
+public class Product extends Audit {
 	@Id
 	private String id;
 	private String name;

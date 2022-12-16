@@ -1,4 +1,4 @@
-package com.mongoddemo.demo.model;
+package com.mongoddemo.demo.entity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +10,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 @Getter
 @Setter
-public class AuditModel {
+public class Audit {
 	@CreatedDate
 	private LocalDateTime createdDate;
 

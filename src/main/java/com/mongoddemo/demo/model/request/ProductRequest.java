@@ -1,7 +1,5 @@
 package com.mongoddemo.demo.model.request;
 
-import com.mongoddemo.demo.model.AuditModel;
-
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

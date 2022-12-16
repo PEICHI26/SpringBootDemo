@@ -10,7 +10,7 @@ import java.util.List;
 @Document("users")
 @Getter
 @Setter
-public class AppUser {
+public class AppUser extends Audit {
 	private String id;
 	private String emailAddress;
 	private String password;

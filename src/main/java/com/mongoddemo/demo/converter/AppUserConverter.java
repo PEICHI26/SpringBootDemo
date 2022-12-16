@@ -1,4 +1,4 @@
-package com.mongoddemo.demo.service;
+package com.mongoddemo.demo.converter;
 
 import com.mongoddemo.demo.entity.AppUser;
 import com.mongoddemo.demo.model.request.AppUserRequest;

@@ -1,5 +1,6 @@
 package com.mongoddemo.demo.service;
 
+import com.mongoddemo.demo.converter.AppUserConverter;
 import com.mongoddemo.demo.exception.NotFoundException;
 import com.mongoddemo.demo.exception.UnprocessableEntityException;
 import com.mongoddemo.demo.entity.AppUser;
