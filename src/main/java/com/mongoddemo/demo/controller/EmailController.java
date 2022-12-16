@@ -13,17 +13,17 @@ import org.springframework.web.bind.annotation.RestController;
 // Class
 public class EmailController {
 
-	@Autowired
-	private EmailService emailService;
-
-	// Sending a simple Email
-	@PostMapping("/sendMail")
-	public String
-	sendMail(@AuthenticationPrincipal SpringUser springUser, @RequestBody EmailDetails details) {
-		String status
-			= emailService.sendSimpleMail(springUser.getUsername(), details);
-
-		return status;
-	}
+	//	@Autowired
+	//	private EmailService emailService;
+	//
+	//	// Sending a simple Email
+	//	@PostMapping("/sendMail")
+	//	public String
+	//	sendMail(@AuthenticationPrincipal SpringUser springUser, @RequestBody EmailDetails details) {
+	//		String status
+	//			= emailService.sendSimpleMail(springUser.getUsername(), details);
+	//
+	//		return status;
+	//	}
 
 }

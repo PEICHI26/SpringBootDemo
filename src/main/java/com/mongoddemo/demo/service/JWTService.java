@@ -37,7 +37,7 @@ public class JWTService {
 		UserDetails userDetails = (UserDetails) authenticate.getPrincipal();
 
 		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.MINUTE, 10);
+		calendar.add(Calendar.MINUTE, 100);
 
 		Claims claims = Jwts.claims();
 		claims.put("username", userDetails.getUsername());
