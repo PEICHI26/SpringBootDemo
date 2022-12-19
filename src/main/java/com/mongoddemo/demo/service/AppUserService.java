@@ -1,5 +1,8 @@
 package com.mongoddemo.demo.service;
 
+import com.mongoddemo.demo.aop.ActionType;
+import com.mongoddemo.demo.aop.EntityType;
+import com.mongoddemo.demo.aop.SendEmail;
 import com.mongoddemo.demo.converter.AppUserConverter;
 import com.mongoddemo.demo.exception.NotFoundException;
 import com.mongoddemo.demo.exception.UnprocessableEntityException;
@@ -28,6 +31,7 @@ public class AppUserService {
 		this.passwordEncoder = new BCryptPasswordEncoder();
 	}
 
+	@SendEmail(action = ActionType.CREATE, entity = EntityType.USER)
 	public AppUserResponse createUser(AppUserRequest request) {
 		Optional<AppUser> existingUser = repository.findByEmailAddress(request.getEmailAddress());
 		if (existingUser.isPresent()) {

@@ -22,7 +22,7 @@ public class MailController {
 
 	@PostMapping
 	public ResponseEntity<String> sendMail(@Valid @RequestBody SendMailRequest request) {
-		mailService.sendMail(request);
+		mailService.sendMail(request.getSubject(), request.getContent(), request.getReceivers());
 		System.out.println("Send mail successfully");
 		return ResponseEntity.ok("Mail sent");
 	}

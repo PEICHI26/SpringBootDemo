@@ -14,7 +14,8 @@ import org.springframework.data.mongodb.config.EnableMongoAuditing;
 public class AuditingConfig {
 
 	@Bean
-	@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE, proxyMode = ScopedProxyMode.TARGET_CLASS)
+	//@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE, proxyMode = ScopedProxyMode.TARGET_CLASS)
+	@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 	public AuditorAware<String> myAuditorProvider() {
 		System.out.println("Auditor is created.");
 		return new AuditorAwareImpl();

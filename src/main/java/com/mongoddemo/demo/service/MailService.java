@@ -1,6 +1,7 @@
 package com.mongoddemo.demo.service;
 
 import com.mongoddemo.demo.model.request.SendMailRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.MailAuthenticationException;
@@ -12,25 +13,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Slf4j
 public class MailService {
-
-	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
 	private final JavaMailSenderImpl mailSender;
 	private final long tag;
 	private final List<String> mailMessages;
-	private final String LOG_EMAIL;
 
 	public MailService(JavaMailSenderImpl mailSender) {
 		this.mailSender = mailSender;
 		this.tag = System.currentTimeMillis();
 		this.mailMessages = new ArrayList<>();
-		this.LOG_EMAIL = "peggy.chien@teamplus.com.tw";
-	}
-
-	public void sendMail(SendMailRequest request) {
-
-		sendMail(request.getSubject(), request.getContent(), request.getReceivers());
 	}
 
 	public void sendMail(String subject, String content, List<String> receivers) {
@@ -45,22 +38,10 @@ public class MailService {
 			mailMessages.add(content);
 			printMessages();
 		} catch (MailAuthenticationException e) {
-			LOGGER.error(e.getMessage());
+			log.error(e.getMessage());
 		} catch (Exception e) {
-			LOGGER.warn(e.getMessage());
+			log.warn(e.getMessage());
 		}
-	}
-
-	public void sendNewProductMail(String productId) {
-		String content = String.format("There's a new created product (%s).", productId);
-		sendMail("New Product", content,
-			Collections.singletonList(LOG_EMAIL));
-	}
-
-	public void sendDeleteProductMail(String productId) {
-		String content = String.format("There's a product deleted (%s).", productId);
-		sendMail("Product Deleted", content,
-			Collections.singletonList(LOG_EMAIL));
 	}
 
 	private void printMessages() {

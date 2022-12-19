@@ -15,9 +15,8 @@ public class ServiceConfig {
 	@Bean
 	//@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE, proxyMode = ScopedProxyMode.TARGET_CLASS)
 	@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
-	public ProductService productService(ProductRepository repository,
-		MailService mailService) {
+	public ProductService productService(ProductRepository repository) {
 		System.out.println("Product Service is created.");
-		return new ProductService(repository, mailService);
+		return new ProductService(repository);
 	}
 }

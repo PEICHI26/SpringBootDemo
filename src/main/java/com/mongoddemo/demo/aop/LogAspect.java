@@ -1,10 +1,12 @@
-package com.mongoddemo.demo.log;
+package com.mongoddemo.demo.aop;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
 
 @Aspect
 @Component
@@ -27,29 +29,31 @@ public class LogAspect {
 	//	@AfterReturning(pointcut = "pointCut()", returning = "result")
 	//	public void afterReturning(JoinPoint joinPoint, Object result) {
 	//		System.out.println("=====after returning advice starts=====");
+	//		System.out.println(getMethodName(joinPoint));
+	//		System.out.println("Args: " + Arrays.toString(joinPoint.getArgs()));
 	//		if (result != null) {
-	//			System.out.println(result);
+	//			System.out.println("result: " + result);
 	//		}
 	//		System.out.println("=====after returning advice ends=====");
 	//	}
-	//
+
 	//利用「Java Reflection」得到 Method 物件，再取出方法名稱。
 	private String getMethodName(JoinPoint joinPoint) {
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
 		return signature.getName();
 	}
 
-	@Around("pointCut()")
-	public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
-		System.out.println("=====advice starts=====");
-		long startTime = System.currentTimeMillis();
-		Object result = joinPoint.proceed();
-		System.out.println(getMethodName(joinPoint));
-		long spentTime = System.currentTimeMillis() - startTime;
-		System.out.println("Time spent: " + spentTime);
-		System.out.println("=====advice ends=====");
-
-		return result;
-	}
+	//	@Around("pointCut()")
+	//	public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
+	//		System.out.println("=====advice starts=====");
+	//		long startTime = System.currentTimeMillis();
+	//		Object result = joinPoint.proceed();
+	//		System.out.println(getMethodName(joinPoint));
+	//		long spentTime = System.currentTimeMillis() - startTime;
+	//		System.out.println("Time spent: " + spentTime);
+	//		System.out.println("=====advice ends=====");
+	//
+	//		return result;
+	//	}
 
 }

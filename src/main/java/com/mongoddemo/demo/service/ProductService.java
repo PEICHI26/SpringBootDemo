@@ -1,5 +1,8 @@
 package com.mongoddemo.demo.service;
 
+import com.mongoddemo.demo.aop.ActionType;
+import com.mongoddemo.demo.aop.EntityType;
+import com.mongoddemo.demo.aop.SendEmail;
 import com.mongoddemo.demo.converter.ProductConverter;
 import com.mongoddemo.demo.entity.Product;
 import com.mongoddemo.demo.exception.NotFoundException;
@@ -21,8 +24,6 @@ public class ProductService {
 
 	private ProductRepository repository;
 
-	private MailService mailService;
-
 	public Product getProduct(String id) {
 		return repository.findById(id)
 			.orElseThrow(() -> new NotFoundException("Can't find product."));
@@ -34,13 +35,14 @@ public class ProductService {
 		return ProductConverter.toProductResponse(product);
 	}
 
+	@SendEmail(entity = EntityType.PRODUCT, action = ActionType.CREATE)
 	public ProductResponse createProduct(ProductRequest request) {
 		Product product = ProductConverter.toProduct(request);
 		repository.insert(product);
-		mailService.sendNewProductMail(product.getId());
 		return ProductConverter.toProductResponse(product);
 	}
 
+	@SendEmail(entity = EntityType.PRODUCT, action = ActionType.UPDATE, idParamIndex = 0)
 	public ProductResponse replaceProduct(String id, ProductRequest request) {
 		Product oldProduct = getProduct(id);
 		Product newProduct = ProductConverter.toProduct(request);
@@ -50,8 +52,8 @@ public class ProductService {
 		return ProductConverter.toProductResponse(newProduct);
 	}
 
+	@SendEmail(entity = EntityType.PRODUCT, action = ActionType.DELETE, idParamIndex = 0)
 	public void deleteProduct(String id) {
-		mailService.sendDeleteProductMail(id);
 		repository.deleteById(id);
 	}
 
