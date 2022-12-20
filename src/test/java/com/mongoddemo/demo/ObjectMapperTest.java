@@ -1,8 +1,10 @@
 package com.mongoddemo.demo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
@@ -18,10 +20,13 @@ public class ObjectMapperTest {
 		book.setPrice(350);
 		book.setIsbn("978-986-123-456-7");
 		book.setCreatedTime(new Date());
+
+		//轉成String
 		String bookString = objectMapper.writeValueAsString(book);
-		//json format
+		//json object format ,key-value
 		JSONObject bookJSON = new JSONObject(bookString);
-		Assert.assertEquals(book.getId(), bookJSON.getString("id"));
+		//bookJson.get(key) => value
+		Assertions.assertEquals(book.getId(), bookJSON.getString("id"));
 	}
 
 	@Test
@@ -31,8 +36,11 @@ public class ObjectMapperTest {
 			.put("companyName", "Taipei Company")
 			.put("address", "Taipei")
 			.put("tel", "02-1234-5678");
-		Publisher publisher = objectMapper.readValue(publisherJSON.toString(), Publisher.class);
-		Assert.assertEquals(publisherJSON.getString("companyName"), publisher.getCompanyName());
+		//資料傳輸必須要用String
+		String publisherString = publisherJSON.toString();
+		//傳入字串與目標類別，來轉換成物件
+		Publisher publisher = objectMapper.readValue(publisherString, Publisher.class);
+		Assertions.assertEquals(publisherJSON.getString("companyName"), publisher.getCompanyName());
 	}
 
 	private static class Book {
@@ -95,6 +103,7 @@ public class ObjectMapperTest {
 	private static class Publisher {
 		private String companyName;
 		private String address;
+
 		private String tel;
 
 		public String getCompanyName() {
