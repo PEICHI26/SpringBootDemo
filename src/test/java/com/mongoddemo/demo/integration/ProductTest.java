@@ -2,7 +2,6 @@ package com.mongoddemo.demo.integration;
 
 import com.mongoddemo.demo.entity.AppUser;
 import com.mongoddemo.demo.entity.Product;
-import com.mongoddemo.demo.integration.BaseTest;
 import com.mongoddemo.demo.model.UserAuthority;
 import com.mongoddemo.demo.model.request.ProductRequest;
 import org.json.JSONArray;
@@ -24,7 +23,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -34,8 +32,7 @@ public class ProductTest extends BaseTest {
 	public void teatCreateProduct() throws Exception {
 
 		//create new user and login(put token in the header)
-		AppUser nancy = createUser("Nancy", Collections.singletonList(UserAuthority.ADMIN));
-		login(nancy.getEmailAddress());
+		login();
 
 		//product request
 		ProductRequest productRequest = new ProductRequest();
@@ -60,8 +57,7 @@ public class ProductTest extends BaseTest {
 
 	@Test
 	public void testMyGetProduct() throws Exception {
-		AppUser nancy = createUser("Nancy", Collections.singletonList(UserAuthority.ADMIN));
-		login(nancy.getEmailAddress());
+		login();
 		Product tea = createProduct("Tea", 34);
 		MvcResult mvcResult = mockMvc.perform(get("/products/" + tea.getId())
 				.headers(httpHeaders))
@@ -77,8 +73,7 @@ public class ProductTest extends BaseTest {
 
 	@Test
 	public void testUpdate() throws Exception {
-		AppUser nancy = createUser("Nancy", Collections.singletonList(UserAuthority.ADMIN));
-		login(nancy.getEmailAddress());
+		login();
 
 		Product tea = createProduct("Tea", 34);
 
@@ -103,11 +98,8 @@ public class ProductTest extends BaseTest {
 
 	@Test(expected = RuntimeException.class)
 	public void testDeleteProduct() throws Exception {
-		AppUser nancy = createUser("Nancy", Collections.singletonList(UserAuthority.ADMIN));
-		login(nancy.getEmailAddress());
-
+		login();
 		Product tea = createProduct("Tea", 34);
-
 		mockMvc.perform(delete("/products/" + tea.getId())
 				.headers(httpHeaders))
 			.andExpect(status().isNoContent());

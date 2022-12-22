@@ -19,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -37,13 +38,7 @@ public class BaseTest {
 	protected ProductRepository productRepository;
 	@Autowired
 	protected AppUserRepository appUserRepository;
-	protected HttpHeaders httpHeaders;
-
-	@Before
-	public void init() {
-		httpHeaders = new HttpHeaders();
-		httpHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-	}
+	protected HttpHeaders httpHeaders = new HttpHeaders();
 
 	@After
 	public void clear() {
@@ -51,7 +46,7 @@ public class BaseTest {
 		productRepository.deleteAll();
 	}
 
-	protected AppUser createUser(String name, List<UserAuthority> authorities) {
+	private AppUser createUser(String name, List<UserAuthority> authorities) {
 		AppUser appUser = new AppUser();
 		appUser.setName(name);
 		appUser.setPassword(passwordEncoder.encode(USER_PASSWORD));
@@ -60,10 +55,11 @@ public class BaseTest {
 		return appUserRepository.insert(appUser);
 	}
 
-	protected void login(String email) throws Exception {
+	private void putHeader(String email) throws Exception {
 		AuthRequest authRequest = new AuthRequest();
 		authRequest.setUsername(email);
 		authRequest.setPassword(USER_PASSWORD);
+		httpHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 		MvcResult mvcResult = mockMvc.perform(post("/auth")
 				.headers(httpHeaders)
 				.content(mapper.writeValueAsString(authRequest)))
@@ -73,6 +69,11 @@ public class BaseTest {
 		JSONObject jsonObject = new JSONObject(mvcResult.getResponse().getContentAsString());
 		String token = jsonObject.getString("token");
 		httpHeaders.add(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+	}
+
+	protected void login() throws Exception {
+		AppUser peggy = createUser("Peggy", Collections.singletonList(UserAuthority.ADMIN));
+		putHeader(peggy.getEmailAddress());
 	}
 
 }

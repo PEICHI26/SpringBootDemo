@@ -8,15 +8,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 @Configuration
 public class ServiceConfig {
 
 	@Bean
-	//@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE, proxyMode = ScopedProxyMode.TARGET_CLASS)
-	@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
-	public ProductService productService(ProductRepository repository) {
+	@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE, proxyMode = ScopedProxyMode.TARGET_CLASS)
+	//@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
+	public ProductService productService(ProductRepository repository, MongoTemplate mongoTemplate) {
 		System.out.println("Product Service is created.");
-		return new ProductService(repository);
+		return new ProductService(repository, mongoTemplate);
 	}
 }
